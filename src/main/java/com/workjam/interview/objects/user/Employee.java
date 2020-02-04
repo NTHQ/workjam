@@ -77,4 +77,9 @@ public class Employee implements User {
 
         return buffer.toString();
     }
+
+    @Override
+    public int compareTo(User user) {
+        return this.getName().compareTo(user.getName());
+    }
 }

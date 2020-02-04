@@ -12,6 +12,7 @@ import java.time.ZoneId;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * The UserRegistryImpl class is used to manage the users persistence in the application.
@@ -43,7 +44,7 @@ public class UserRegistryImpl implements UserRegistry {
         List<Employee> employees333 = new ArrayList<>();
         for (int i = 0; i < 13; i++) {
             long randomDay = ThreadLocalRandom.current().nextLong(currentDate);
-            boolean randomActive = Math.random() % 2 == 1;
+            boolean randomActive = random.nextBoolean();
             Employee employee = (Employee) UserFactory.getUser(User.Permission.EMPLOYEE, Instant.ofEpochMilli(randomDay).atZone(ZoneId.systemDefault()).toLocalDate(), randomActive);
 
             if (i < 7) {
@@ -58,7 +59,7 @@ public class UserRegistryImpl implements UserRegistry {
         List<User> managers333 = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             long randomDay = ThreadLocalRandom.current().nextLong(currentDate);
-            boolean randomActive = Math.random() % 2 == 1;
+            boolean randomActive = random.nextBoolean();
             Manager manager = (Manager) UserFactory.getUser(User.Permission.MANAGER, Instant.ofEpochMilli(randomDay).atZone(ZoneId.systemDefault()).toLocalDate(), randomActive);
 
             if (i < 3) {
@@ -129,13 +130,20 @@ public class UserRegistryImpl implements UserRegistry {
 
             final List<User> userList = REGISTRY.get(Integer.valueOf(companyId));
 
-            if (userList != null)
+            if (userList != null) {
+                Collections.sort(userList);
                 return Collections.unmodifiableList(userList);
+            }
         }
 
         /*
          * Complete the method to return a filtered list based on the specified filter predicate
          */
+        final List<User> userList = REGISTRY.get(Integer.valueOf(companyId));
+        if (userList != null) {
+            Collections.sort(userList);
+            return userList.stream().filter(filter).collect(Collectors.toList());
+        }
 
         return Collections.emptyList();
     }

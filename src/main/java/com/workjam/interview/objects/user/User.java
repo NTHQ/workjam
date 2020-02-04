@@ -4,7 +4,7 @@ package com.workjam.interview.objects.user;
 import java.time.LocalDate;
 import java.util.UUID;
 
-public interface User {
+public interface User extends Comparable<User> {
 
     public UUID getUuid();
 

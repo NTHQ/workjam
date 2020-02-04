@@ -92,4 +92,9 @@ public class Admin implements User {
     public void addManagers(Manager... managers) {
         managerList.addAll(Arrays.asList(managers));
     }
+
+    @Override
+    public int compareTo(User user) {
+        return this.getName().compareTo(user.getName());
+    }
 }

@@ -94,4 +94,9 @@ public class Manager implements User {
 
         this.employeeList.addAll(Arrays.asList(employee));
     }
+
+    @Override
+    public int compareTo(User user) {
+        return this.getName().compareTo(user.getName());
+    }
 }
