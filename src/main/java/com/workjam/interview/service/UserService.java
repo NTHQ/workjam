@@ -35,9 +35,12 @@ public class UserService {
         return userRegistry.getUsers(companyId, predicate);
 
     }
+
     /*
      * Add method to add a user into the UserRegistry.
      */
-
+    public boolean addUser(int companyId, User user) {
+        return userRegistry.addUser(companyId, user);
+    }
 
 }

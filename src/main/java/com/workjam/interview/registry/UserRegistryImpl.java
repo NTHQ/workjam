@@ -164,6 +164,18 @@ public class UserRegistryImpl implements UserRegistry {
         /*
          * Complete the method to add the specified user into the registry
          */
-        return false;
+        List<User> companyUsers = REGISTRY.get(companyId);
+        if (companyUsers == null) {
+            companyUsers = new ArrayList<>();
+            companyUsers.add(user);
+            REGISTRY.put(companyId, companyUsers);
+        } else {
+            if (companyUsers.contains(user)) {
+                return false; // User already exists
+            }
+            companyUsers.add(user);
+            Collections.sort(companyUsers);
+        }
+        return true;
     }
 }
